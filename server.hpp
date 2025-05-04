@@ -827,7 +827,8 @@ public:
     void UpdateEvent(Channel *channel) { return _poller.UpdateEvent(channel); }
     // 移除描述符的监控
     void RemoveEvent(Channel *channel) { return _poller.RemoveEvent(channel); }
-    void TimerAdd(uint64_t id, uint32_t delay, const TaskFunc &cb) { return _timer_wheel.TimerAdd(id, delay, cb); }
+    void TimerAdd(uint64_t id, uint32_t delay, const TaskFunc &cb) 
+    { return _timer_wheel.TimerAdd(id, delay, cb); }
     void TimerRefresh(uint64_t id) { return _timer_wheel.TimerRefresh(id); }
     void TimerCancel(uint64_t id) { return _timer_wheel.TimerCancel(id); }
     bool HasTimer(uint64_t id) { return _timer_wheel.HasTimer(id); }
@@ -1049,8 +1050,9 @@ private:
     }
 
 public:
-    Connection(EventLoop *loop, uint64_t conn_id, int sockfd) : _conn_id(conn_id), _sockfd(sockfd), _enable_inactive_release(false),
-                                                                _loop(loop), _statu(CONNECTING), _socket(_sockfd), _channel(loop, _sockfd)
+    Connection(EventLoop *loop, uint64_t conn_id, int sockfd) : 
+    _conn_id(conn_id), _sockfd(sockfd), _enable_inactive_release(false),
+    _loop(loop), _statu(CONNECTING), _socket(_sockfd), _channel(loop, _sockfd)
     {
         _channel.SetCloseCallback(std::bind(&Connection::HandleClose, this));
         _channel.SetEventCallback(std::bind(&Connection::HandleEvent, this));
